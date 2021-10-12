@@ -1,0 +1,18 @@
+{
+  "name": "pools-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@iov/crypto": "^2.1.0",
+    "bignumber.js": "^9.0.1",
+    "dotenv": "^10.0.0",
+    "secretjs": "^0.11.0"
+  }
+}
