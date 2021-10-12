@@ -1,5 +1,7 @@
 const { CosmWasmClient } = require("secretjs");
 const BigNumber = require('bignumber.js')
+const Progress = require('clui').Progress;
+const log = require('single-line-log').stdout;
 
 require('dotenv').config();
 
@@ -13,9 +15,13 @@ const main = async () => {
   console.log('Querying pool status...');
 
   let result = [];
-  
+  let progressBar = new Progress(rptStatus.status.config.length);
+  let progress = 0;
+
   for (const pool of rptStatus.status.config) {
-    console.log(`Querying pool for ${pool[0]}...`)
+    log(`Querying pool for ${pool[0]}...`)
+    progress += 1;
+    log(progressBar.update(progress, rptStatus.status.config.length));
 
     let response = await client.queryContractSmart(pool[0], { "pool_info": { "at": Date.now() } });
     result.push({
@@ -23,8 +29,9 @@ const main = async () => {
       "claimed": new BigNumber(response.pool_info.pool_claimed).div(1e18).toString(10),
       "pool_balance": new BigNumber(response.pool_info.pool_balance).div(1e18).toString(10)
     });
+
   }
-  console.log("Current pools status:");
+  log("Current pools status:\n");
   console.table(result);
 };
 
