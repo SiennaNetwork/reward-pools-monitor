@@ -26,6 +26,8 @@ const main = async () => {
     let response = await client.queryContractSmart(pool[0], { "pool_info": { "at": Date.now() } });
     result.push({
       "pool": pool[0],
+      "pool_threshold": response.pool_info.pool_threshold,
+      "pool_cooldown": response.pool_info.pool_cooldown,
       "claimed": new BigNumber(response.pool_info.pool_claimed).div(1e18).toString(10),
       "pool_balance": new BigNumber(response.pool_info.pool_balance).div(1e18).toString(10)
     });
